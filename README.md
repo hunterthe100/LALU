@@ -37,4 +37,6 @@ There are some programs I wrote during the school year inside the Programs file
 
 The MAX and OPTIMIZED MAX programs work but I could never get any of the sort programs to work properly (it would have been cool, but I moved on to programing FPGA’s in class before I could get it done).  I wrote the find the min, but I forget if it works as I only tested it once.  Also for most of these you will have to program the data memory, but I will work on possibly including some files to load in.  Also remember with the max programs that this machine uses signed integers, which means the highest integer is efff(0111 1111 1111 1111), and the lowest is ffff(1000 0000 0000 0000) (I believe this is right, but feel free to correct me if I am wrong!).  
 
-In addition if you right click on the leftmost RAM and edit contents you will be able to program the LALU, and that about wraps it up. 
+In addition if you right click on the leftmost RAM and edit contents you will be able to program the LALU.
+
+That about wraps it up, have fun! 
