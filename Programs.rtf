@@ -1,0 +1,256 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 MAX PROGRAM\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\'97\'97Setup\
+00 - load min index to a 				62\
+01 - store a in index counter			44\
+02 - load the value at min index to maxval	07\
+03 - store a to the max				24\
+\'97\'97this part increments the index & start of loop\
+04 - load index					42\
+05 - exchange					03\
+06 - load 1 to a					12\
+07 - add a and b					00\
+08 - store a to index					44\
+\'97\'97 check if val at index is greater than max & jumps to code that puts new value in max & jumps to start\
+09 - load value at [index] to a			07\
+0a - exchange a and b				03\
+0b - load max to a					22\
+0c - subtract a and b				01\
+0d - jump conditional to instr 10			86\
+0e - nop						08\
+0f - jump to instr 05					2d\
+\'97\'97this puts the new value in the max \
+10 - load index					42\
+11 - load value at index to a			07\
+12 - store value at max				24\
+13 - jump to instr 04					26 // if we want to exit we have to exit here and add a few inst\'92s\
+14 - nop						08\
+15 - nop						08\
+16 - nop						08\
+17 - nop						08\
+18 - nop						08\
+19 - nop						08\
+1a - nop						08\
+1b - nop						08\
+1c - nop						08\
+1d - nop						08\
+1e - nop						08\
+1f - nop						08\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+\
+SORT PROGRAM (contains modified max program)\
+\
+-storeA takes value at breg and stores it at [addr areg 0:15] in memory\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+\
+\'97\'97Setup for max\
+00 - load min index to a 				62\
+01 - store a in index counter			44\
+02 - load the value at min index to maxval	07\
+03 - store a to the max				24\
+\
+\
+\'97\'97this part increments the index & start of loop\
+04 - load index					42\
+05 - exchange					03\
+06 - load 1 to a					12\
+07 - add a and b					00\
+08 - store a to index					44\
+\'97\'97 check if val at index is greater than max & jumps to code that puts new value in max & jumps to start\
+09 - load value at [index] to a			07\
+0a - exchange a and b				03\
+0b - load max to a					22\
+0c - subtract a and b				01\
+0d - jump conditional to instr 10			86\
+0e - nop						08\
+0f - jump to instr 05					2d  // (make sure this part works)\
+\'97\'97this puts the new value in the max & exits if index = max\
+10 - load index					42\
+11 - load value at index to a			07\
+12 - store value at max				24\
+\
+13 - load maximum index				72\
+14 - swap						03\
+15 - load index					42\
+16 - index - max					01\
+17 - jump conditional to instr 04			27 // CHANGED TO JUMP CONDITIONAL\
+\
+\
+18 - load max					22\
+19 - exchange					03\
+1a - load maximum index				72\
+1b - write(storeA) max to maximum index	0f	\
+\
+\
+1c - load 1						12\
+1d - exchange					03\
+1e - load maximum index				72	\
+1f - index - 1						01\
+00 - write a to maximum index			74\
+00 - jump to beginning 04				25		addr[0010 0]101\
+\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+\
+OPTIMIZED MAX PROGRAM (slower start)\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\'97\'97Setup\
+00 - load min index to a 				62\
+01 - store a in index counter			44\
+\
+\'97\'97 new start of loop, load index is out of loop because we load again at the end of the loop\
+\'97\'97 check if val at index is greater than max & jumps to code that puts new value in max & jumps to start\
+02 - load value at [index] to a			07\
+03 - exchange a and b				03\
+04 - load max to a					22\
+05 - subtract a and b				01\
+06 - jump conditional to instr 09			4e //	01001[110]\
+07 - nop						08\
+08 - jump to instr 0d					6d  //	01101[101] // should be 0c\
+\'97\'97this puts the new value in the max \
+09 - load index					42\
+0a - load value at index to a			07\
+0b - store value at max				24\
+\
+\'97\'97this part increments the index (used to be at start of loop)\
+0c - load index					42 // put increment here\
+0d - exchange					03\
+0e - load 1 to a					12\
+0f - add a and b					00\
+10 - store a to index					44\
+\
+11 - jump to instr 02					15 // if we want to exit we have to exit here and add a few inst\'92s \
+12 - nop						08\
+13 - nop						08\
+14 - nop						08\
+15 - nop						08\
+16 - nop						08\
+17 - nop						08\
+18 - nop						08\
+19 - nop						08\
+1a - nop						08\
+1b - nop						08\
+1c - nop						08\
+1d - nop						08\
+1e - nop						08\
+1f - nop						08\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+FIND MIN PROGRAM\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\'97\'97Setup\
+00 - load min index to a 				62\
+01 - store a in index counter			44\
+\
+\'97\'97 new start of loop, load index is out of loop because we load again at the end of the loop\
+\'97\'97 check if val at index is greater than max & jumps to code that puts new value in min & jumps to start\
+02 - load max to a					22\
+03 - exchange a and b				03\
+\
+04 - load index to a					42\
+\
+05 - load [index] to a				07\
+06 - subtract a and b				01\
+07 - jump conditional to instr 09			4e //	01001[110]\
+08 - nop						08\
+09 - jump to instr 0d					6d  //	01101[101]\
+\'97\'97this puts the new value in the min\
+0a - load index					42\
+0b - load value at index to a			07\
+0c - store value at min				24\
+\
+\'97\'97this part increments the index (used to be at start of loop)\
+0d - load index					42 // put increment here\
+0e - exchange					03\
+0f  - load 1 to a					12\
+10 - add a and b					00\
+11 - store a to index					44\
+\
+\'97\'97added code\
+12 - load maximum index				72\
+13 - swap						03\
+14 - load index					42\
+15 - index - max					01\
+\
+16 - jump conditional to instr 02			17 // jump if index = max (note index will be 1 greater than max if this executes, moving the increment code makes sure that this exits when the computed index = max)\
+\
+00 - load min\
+00 - \
+\
+13 - nop						08\
+14 - nop						08\
+15 - nop						08\
+16 - nop						08\
+17 - nop						08\
+18 - nop						08\
+19 - nop						08\
+1a - nop						08\
+1b - nop						08\
+1c - nop						08\
+1d - nop						08\
+1e - nop						08\
+1f - nop						08\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+\
+SORT PROGRAM ( with optimized max)\
+\
+-storeA takes value at breg and stores it at [addr areg 0:15] in memory\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\'97\'97Setup\
+00 - load min index to a 				62\
+01 - store a in index counter			44\
+\
+\'97\'97 new start of loop, load index is out of loop because we load again at the end of the loop\
+\'97\'97 check if val at index is greater than max & jumps to code that puts new value in max & jumps to start\
+02 - load value at [index] to a			07\
+03 - exchange a and b				03\
+04 - load max to a					22\
+05 - subtract a and b				01\
+06 - jump conditional to instr 09			4e // change again		01001[110]\
+07 - nop						08\
+08 - jump to instr 0d					6d  // change again		01101[101]\
+\'97\'97this puts the new value in the max \
+09 - load index					42\
+0a - load value at index to a			07\
+0b - store value at max				24\
+\
+\'97\'97this part increments the index (used to be at start of loop)\
+0c - load index					42 // put increment here\
+0d - exchange					03\
+0e - load 1 to a					12\
+0f - add a and b					00\
+10 - store a to index					44\
+\
+\'97\'97added code\
+11 - load maximum index				72\
+12 - swap						03\
+13 - load index					42\
+14 - index - max					01\
+\
+15 - jump conditional to instr 02			17 // jump if index = max (note index will be 1 greater than max if this executes, moving the increment code makes sure that this exits when index = max)\
+\
+\
+16 - load max					22\
+17 - exchange					03\
+18 - load maximum index				72\
+19 - write(storeA) max to maximum index	0f	\
+\
+\
+1a - load 1						12\
+1b - exchange					03\
+1c - load maximum index				72	\
+1d - index - 1						01\
+1e - write a to maximum index			74\
+1f - jump to beginning 00				05		addr[0010 0]101\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+}
