@@ -12,13 +12,13 @@ These are encoded using HEX (0123456789ABCDEF), as hex is 4 “bits” long it i
 
 The LALU is equipped with a carry select adder (though I believe that this design is simple, and if you are really looking for a challenge to build, try a Lookahead Carry Unit adder which is also in this repo).  This carry select adder has two inputs, the A and B registers.
 
-The LALU’s instructions execute 3 clock cycles after they are read out by the there are however, two exceptions to this, the djump and dcjump which execute two clock cycles after they are read.  This leads to some nuances while programing.  In addition their is a “dead” clock cycle which is initiated after the jump is initiated, their will be an example of this later in the programing section. Additionally these two commands also have two different ways to be accessed due to the instruction memory being five bits long.  The enchoding scheme for both of these goes as follows [xxxxx] [xxx], where the normal encoding scheme goes [xxxx] [xxxx] for all other commands.
+The LALU’s instructions execute 3 clock cycles after they are read out by the there are however, two exceptions to this, the djump and dcjump which execute two clock cycles after they are read.  This leads to some nuances while programing.  In addition there is a “dead” clock cycle which is initiated after the jump is initiated, there will be an example of this later in the programing section. Additionally these two commands also have two different ways to be accessed due to the instruction memory being five bits long.  The encoding scheme for both of these is as follows [xxxxx] [xxx], where the normal encoding scheme goes [xxxx] [xxxx] for all other commands.
 
-The quark with the two different ways to access jump and dcjump could be fixed with a different encoding scheme (that being putting the instructions before the access to memory, but this might be a bit harder to encode.
+The quirk with the two different ways to access jump and dcjump could be fixed with a different encoding scheme, that being putting the instructions before the access to memory, but this might be a bit harder to encode.
 
 00 = add
 01 = subtract
-x2 = load, uses the memory address inputted to load whatever is at that address into the “a register”
+x2 = load, uses the memory address input to load whatever is at that address into the “a register”
 03 = exchange, simply exchanges the contents of the a and b registers
 x4 = str, short for store, store the contents of the A register into the place specified in the memory address
 x5 or xd = djump, since the instruction memory is 5 bits worth of information two different instructions are needed to call 
@@ -31,11 +31,11 @@ x6 or xe - dcjump, essentially a conditional jump which only will jump if the si
 
 0f = I never implemented jumpA fully so don’t use it, it was supposed to jump to an address from the memory,it essentially functions the same as jump i believe.
 
-I am considering the addition of 32 bit addition capabilities (it’s only 16 right now) as the adder which is built in does have overflow detection, but no promises
+I am considering the addition of 32 bit addition capabilities (it’s only 16 right now) as the adder which is built in does have overflow detection, but no promises.
 
 There are some programs I wrote during the school year inside the Programs file
 
-The MAX and OPTIMIZED MAX programs work but I could never get any of the sort programs to work properly (it would have been cool, but I moved on to programing FPGA’s in class before I could get it done).  I wrote the find the min, but I forget if it works as I only tested it once.  Also for most of these you will have to program the data memory, but I will work on possibly including some files to load in.  Also remember with the max programs that this machine uses signed integers, which means the highest integer is efff(0111 1111 1111 1111), and the lowest is ffff(1000 0000 0000 0000) (I believe this is right, but feel free to correct me if I am wrong!).  
+The MAX and OPTIMIZED MAX programs work but I could never get any of the sort programs to work properly (it would have been cool, but I moved on to programing FPGA’s in class before I could get it done).  I wrote the find the min, but I forget if it works as I only tested it once.  Also for most of these you will have to program the data memory, but I will work on possibly including some files to load in.  Also remember with the max programs that this machine uses signed integers, which means the highest integer is efff(0111 1111 1111 1111), and the lowest is ffff(1000 0000 0000 0000) (I believe this is right, but feel free to correct me if I am wrong!) 
 
 In addition if you right click on the leftmost RAM and edit contents you will be able to program the LALU.
 
