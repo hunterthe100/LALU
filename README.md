@@ -1,7 +1,7 @@
 # LALU
 An assignment during the 2014-2015 year in my Digital Electronics class, with some extra goodies.  Most documentation is done, let me know if I missed anything or if you want some help getting it running!
 
-If you want to go read the course material we did in class you can find it here http://lasacs.com/de14/ between the Spring break and Microarchitecture bars. Scroll down a little ways, its not the first thing on the list.
+If you want to go read the course material we did in class you can find it here http://lasacs.com/de14/ between the Spring break and Microarchitecture bars. Scroll down a little ways, it’s not the first thing on the list.
 
 How it works:
 Their are two parts to the instructions for the LALU
@@ -12,7 +12,7 @@ These are encoded using HEX (0123456789ABCDEF), as hex is 4 “bits” long it i
 
 The LALU is equipped with a carry select adder (though I believe that this design is simple, and if you are really looking for a challenge to build, try a Lookahead Carry Unit adder which is also in this repo).  This carry select adder has two inputs, the A and B registers.
 
-The LALU’s instructions execute 3 clock cycles after they are read out by the there are however, two exceptions to this, the djump and dcjump which execute two clock cycles after they are read.  This leads to some nuances while programing.  In addition there is a “dead” clock cycle which is initiated after the jump is initiated, there will be an example of this later in the programing section. Additionally these two commands also have two different ways to be accessed due to the instruction memory being five bits long.  The encoding scheme for both of these is as follows [xxxxx] [xxx], where the normal encoding scheme goes [xxxx] [xxxx] for all other commands.
+The LALU’s instructions execute 3 clock cycles after they are read out from the program memory the there are however, two exceptions to this, the djump and dcjump which execute two clock cycles after they are read.  This leads to some nuances while programing.  In addition there is a “dead” clock cycle which is initiated after the jump is initiated, there will be an example of this later in the programing section. Additionally these two instructions also have two different ways to be accessed due to the instruction memory being five bits long.  The encoding scheme for both of these is [xxxxx] [xxx], where the normal encoding scheme goes [xxxx] [xxxx] for all other instructions.
 
 The quirk with the two different ways to access jump and dcjump could be fixed with a different encoding scheme, that being putting the instructions before the access to memory, but this might be a bit harder to encode.
 
@@ -31,7 +31,7 @@ x6 or xe - dcjump, essentially a conditional jump which only will jump if the si
 
 0f = I never implemented jumpA fully so don’t use it, it was supposed to jump to an address from the memory,it essentially functions the same as jump i believe.
 
-I am considering the addition of 32 bit addition capabilities (it’s only 16 right now) as the adder which is built in does have overflow detection, but no promises.
+I am considering adding 32 bit addition capabilities (it’s only 16 right now) as the adder which is built in does have overflow detection, but no promises.
 
 There are some programs I wrote during the school year inside the Programs file
 
